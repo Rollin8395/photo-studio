@@ -6,6 +6,7 @@ import com.photo.entity.enums.OrderStatus;
 import com.photo.repository.*;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -92,4 +93,29 @@ public class OrderService {
 
         return base * qty;
     }
+
+    public PrintOrder getOrderByCode(String code) {
+
+        return orderRepository
+                .findByOrderCode(code)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+    }
+    //Admin service view all
+    public List<PrintOrder> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
+
+    public PrintOrder updateStatus(Long orderId, OrderStatus status) {
+
+        PrintOrder order = orderRepository
+                .findById(orderId)
+                .orElseThrow();
+
+        order.setStatus(status);
+
+        return orderRepository.save(order);
+    }
+
 }
