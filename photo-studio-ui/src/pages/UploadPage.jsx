@@ -25,8 +25,10 @@ function UploadPage() {
         onChange={(e) => setFile(e.target.files[0])}
       />
 
+      <br/>
+
       <button onClick={uploadPhoto}>
-        Upload
+        Upload Photo
       </button>
 
     </div>
