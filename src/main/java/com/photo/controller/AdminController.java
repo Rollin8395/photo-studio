@@ -4,7 +4,7 @@ import com.photo.entity.PrintOrder;
 import com.photo.entity.enums.OrderStatus;
 import com.photo.repository.PrintOrderRepository;
 import org.springframework.web.bind.annotation.*;
-
+import com.photo.service.OrderService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +14,11 @@ import java.util.Map;
 public class AdminController {
 
     private final PrintOrderRepository orderRepository;
-
-    public AdminController(PrintOrderRepository orderRepository) {
+    private final OrderService orderService;
+    public AdminController(PrintOrderRepository orderRepository,OrderService orderService)
+    {
         this.orderRepository = orderRepository;
+        this.orderService = orderService;
     }
 
     @GetMapping("/stats")
@@ -39,5 +41,10 @@ public class AdminController {
         stats.put("pendingOrders", pending);
 
         return stats;
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteOrder(@PathVariable Long id) {
+        orderService.deleteOrder(id);
     }
 }

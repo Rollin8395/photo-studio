@@ -66,6 +66,7 @@ public class OrderService {
         order.setTotalPrice(price);
         orderRepository.save(order);
 
+
         return order;
     }
 
@@ -112,10 +113,17 @@ public class OrderService {
         PrintOrder order = orderRepository
                 .findById(orderId)
                 .orElseThrow();
-
+        // simple validation
+        if(order.getStatus() == OrderStatus.COLLECTED){
+            throw new RuntimeException("Order already completed");
+        }
         order.setStatus(status);
 
         return orderRepository.save(order);
+    }
+
+    public void deleteOrder(Long orderID){
+        orderRepository.deleteById(orderID);
     }
 
 }

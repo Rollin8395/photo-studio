@@ -26,4 +26,7 @@ public class PrintOrder {
 
     private Instant createdAt = Instant.now();
 
+    private Double price;
+    private String paperType; // GLOSSY / MATTE
+
 }
